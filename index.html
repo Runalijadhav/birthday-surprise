@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<style>
+body {
+    font-family: 'Comic Sans MS', sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 3em;
+    color: #fff;
+    margin-top: 20px;
+    text-shadow: 2px 2px 5px #000;
+}
+#cake { width: 200px; margin: 30px auto; display: block; animation: bounce 1s infinite alternate; }
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-20px); } }
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff6f61;
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px #333;
+    margin: 10px;
+}
+button:hover { background-color: #ff3b2f; }
+
+.popup {
+    display: none; position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white; padding: 30px; border-radius: 15px;
+    box-shadow: 2px 2px 20px #000; z-index: 999;
+}
+.popup button { margin: 10px; }
+
+/* Classy Memories Grid */
+#memoriesSection {
+    display: none;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.memory-grid img {
+    width: 100%;
+    border-radius: 15px;
+    transition: transform 0.5s, box-shadow 0.5s;
+    cursor: pointer;
+}
+.memory-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+</style>
+<style>
+.heart {
+    position: fixed;
+    color: red;
+    animation: floatUp 4s linear infinite;
+}
+@keyframes floatUp {
+    0% { bottom: 0; opacity: 1; }
+    100% { bottom: 100%; opacity: 0; }
+}
+
+#audioPopup button {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+}
+</style>
+</head>
+<body>
+
+<h1>Happy Birthday, Love! 🎉</h1>
+<!-- <img id="cake" src="images/cake.png" alt="Cake"> -->
+<img id="cake" src="images/Vivek.jpeg" alt="My Man">
+
+
+<h2 id="typingText"></h2>
+
+<script>
+const text = "You are the best part of my life ❤️";
+let i = 0;
+function typeEffect() {
+    if (i < text.length) {
+        document.getElementById("typingText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 50);
+    }
+}
+typeEffect();
+</script>
+
+<!-- <audio autoplay loop>
+  <source src="images/music.mp3" type="audio/mpeg">
+</audio> -->
+<!-- <audio id="bgVoice">
+  <source src="images/voice.mp3" type="audio/mpeg">
+</audio> -->
+<div id="audioPopup" class="popup">
+    <p style="font-weight:bold;">🎧 माझा आवाज ऐका ❤️</p>
+
+    <button onclick="playAudio()">▶️ Play</button>
+    <button onclick="pauseAudio()">⏸ Pause</button>
+    <button onclick="restartAudio()">🔁 Restart</button>
+    <button onclick="closeAudio()">❌ Close</button>
+</div>
+
+<!-- <audio id="bgVoice">
+  <source src="images/audio_mp3.mp3" type="audio/mpeg">
+</audio> -->
+<audio id="bgVoice">
+  <source src="https://res.cloudinary.com/dvwm4lk13/video/upload/q_auto/f_auto/v1776507462/AUD-20260418-WA0015._abcnag.mp3" type="audio/mpeg">
+</audio>
+<br>
+<button onclick="showLetter()">Read My Letter 💌</button>
+<!-- <button onclick="playVoice()">
+    Click to Hear Me 🎧
+</button> -->
+
+ <button onclick="openAudioPopup()">
+    Click to Hear Me 🎧
+</button>
+
+<button id="surpriseBtn">Click Me for Surprise!</button>
+<button id="memoriesBtn">Our Memories ❤️</button>
+
+<h3 id="loveTime"></h3>
+<script>
+const startDate = new Date("2022-06-07"); // change date
+function updateTime() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById("loveTime").innerText =
+        "Together for " + days + " days ❤️";
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+
+function playVoice() {
+    const audio = document.getElementById("bgVoice");
+    audio.play();
+}
+</script>
+
+<!-- <script>
+//     function openAudioPopup() {
+//     document.getElementById("audioPopup").style.display = "block";
+//     playAudio()
+// }
+
+function openAudioPopup() {
+    const popup = document.getElementById("audioPopup");
+    const audio = document.getElementById("bgVoice");
+    const music = document.querySelector("audio"); // your bg music
+
+    popup.style.display = "block";
+    audio.currentTime = 0;
+    audio.play();
+
+    if (music) music.volume = 0.2;
+}
+
+function playAudio() {
+    const audio = document.getElementById("bgVoice");
+    audio.play();
+}
+
+function pauseAudio() {
+    const audio = document.getElementById("bgVoice");
+    audio.pause();
+}
+
+function restartAudio() {
+    const audio = document.getElementById("bgVoice");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+function closeAudio() {
+    const audio = document.getElementById("bgVoice");
+    audio.pause();
+    audio.currentTime = 0;
+    document.getElementById("audioPopup").style.display = "none";
+}
+
+document.getElementById("bgVoice").addEventListener("ended", function () {
+    document.getElementById("audioPopup").style.display = "none";
+});
+</script> -->
+
+<script>
+//     function openAudioPopup() {
+//     const popup = document.getElementById("audioPopup");
+//     const audio = document.getElementById("bgVoice");
+
+//     popup.style.display = "block";
+//     audio.currentTime = 0;
+//     audio.play();
+// }
+
+function openAudioPopup() {
+    const popup = document.getElementById("audioPopup");
+    const audio = document.getElementById("bgVoice");
+
+    popup.style.display = "block";
+    audio.currentTime = 0;
+    audio.play();
+
+    popup.querySelector("p").innerText = "🎧 Playing...";
+}
+
+function playAudio() {
+    document.getElementById("bgVoice").play();
+}
+
+function pauseAudio() {
+    document.getElementById("bgVoice").pause();
+}
+
+function restartAudio() {
+    const audio = document.getElementById("bgVoice");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+function closeAudio() {
+    const audio = document.getElementById("bgVoice");
+    audio.pause();
+    audio.currentTime = 0;
+    document.getElementById("audioPopup").style.display = "none";
+}
+
+document.getElementById("bgVoice").addEventListener("ended", function () {
+    document.getElementById("audioPopup").style.display = "none";
+});
+</script>
+<div id="letter" class="popup">
+    <!-- <p>
+        You are not just my love,  
+        you are my peace, my happiness, my everything ❤️  
+        Every memory with you is my favorite.  
+    </p> -->
+    <pre style="text-align: left;">
+प्रिय विवेक (अहो),
+
+हे सगळं मी का केलं… त्याचं reason खूप simple आहे — तुम्हाला हसू यावं म्हणून 😊  
+
+आपले moments perfect नसतील… पण ते आपल्या आहेत, आणि म्हणूनच special आहेत ❤️  
+
+बस इतकंच… आजचा दिवस तुमचा आहे, आणि तुम्ही always happy राहावं हीच wish 💖  
+
+वाढदिवसाच्या खूप शुभेच्छा 🎉
+
+</pre>
+<pre style="text-align: right;">
+    – तुमची ऋणाली ❤️
+</pre >
+
+    <button onclick="closeLetter()">Close</button>
+</div>
+
+<script>
+function showLetter(){
+    document.getElementById("letter").style.display = "block";
+}
+function closeLetter(){
+    document.getElementById("letter").style.display = "none";
+}
+</script>
+
+<div id="popup" class="popup">
+    <p>You are only mine! ❤️</p>
+    <button id="yesBtn">Yes 😍</button>
+    <button id="noBtn">No 😳</button>
+</div>
+
+<!-- Memories Section -->
+<div id="memoriesSection">
+    <div class="memory-grid" id="memoryGrid"></div>
+</div>
+
+<script>
+// Confetti
+function launchConfetti() {
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+}
+
+// Surprised Popup
+const surpriseBtn = document.getElementById('surpriseBtn');
+const popup = document.getElementById('popup');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+
+surpriseBtn.onclick = () => popup.style.display = 'block';
+
+yesBtn.onclick = () => {
+    popup.style.display = 'none';
+    alert("Yay! I love you! 🎉❤️");
+    launchConfetti();
+}
+
+noBtn.onclick = () => {
+    const messages = [
+        "No? Are you sure? 😏",
+        "Haha, you can't escape! You are mine! 😎",
+        "Try again! You know you love me! ❤️",
+        "No? Confused? Click Yes already! 😉"
+    ];
+    const msg = messages[Math.floor(Math.random()*messages.length)];
+    popup.querySelector('p').innerText = msg;
+
+    noBtn.style.position = 'absolute';
+    noBtn.style.top = Math.random() * 200 + 50 + 'px';
+    noBtn.style.left = Math.random() * 200 + 50 + 'px';
+}
+
+// Memories Section
+const memoriesBtn = document.getElementById('memoriesBtn');
+const memoriesSection = document.getElementById('memoriesSection');
+const memoryGrid = document.getElementById('memoryGrid');
+
+const memories = [
+    // {src: "images/memoriesCover.jpg", caption: "The snapshots may be old but the memories are truly eternal."},
+    {src: "images/p8.jpg", caption: "That Miraj moment… where my heart quietly chose you forever. 💕"},
+    {src: "images/p9.jpg", caption: "Miraj garden + you + long talks = perfect moment ❤️"},
+    {src: "images/p12.jpg", caption: "We looked slimmer… but feelings were already heavy ❤️"},
+
+    {src: "images/p3.jpg", caption: "Sateri, बारिश, and us… a perfect little memory.❤️"},
+    {src: "images/p7.jpg", caption: "A crazy height, a fearless moment, and a memory forever."},
+    {src: "images/p11.jpg", caption: "One rose from you was more special than anything else that day. 🌹"},
+    {src: "images/p5.jpg", caption: "A special outfit, a special day, and the most special person beside me 💃🎂❤️"},
+    {src: "images/p4.jpg", caption: "That beard look was different… but not bad at all 😄❤️"},
+    {src: "images/p6.jpg", caption: "I don’t remember the day… but I’ll never forget this feeling. 💖"},
+    {src: "images/p13.jpg", caption: "Hand in hand 🤝❤️"},
+    {src: "images/p14.jpg", caption: "Couple goals… one step at a time 💫”"},
+    {src: "images/p1.jpg", caption: "A studio click, but a real memory ❤️"},
+    {src: "images/p19.jpg", caption: "With the sound of waves and you beside me… nothing else mattered."},
+    {src: "images/p20.jpg", caption: "Malvan evenings 🌅❤️"},
+    {src: "images/p22.jpg", caption: "After sunset, still shining 💫"},
+    {src: "images/p21.jpg", caption: "Rocks, waves, and golden sunshine on rock garden in Malvan ☀️🌊"},
+    {src: "images/p16.jpg", caption: "We may argue, but we never stop choosing us."},
+    {src: "images/p2.jpg", caption: "My first Pune trip… made perfect by you ❤️"},
+
+    {src: "images/p17.jpg", caption: "Holi vibes ✨"},
+    {src: "images/p18.jpg", caption: "Holi with you… my favorite kind of celebration."},
+    // Add more images here
+];
+
+memoriesBtn.onclick = () => {
+    memoriesSection.style.display = 'block';
+    memoryGrid.innerHTML = ''; // Clear before adding
+    memories.forEach(mem => {
+        const img = document.createElement('img');
+        img.src = mem.src;
+        img.title = mem.caption;
+        img.onclick = () => {
+            alert(mem.caption + " ❤️");
+            launchConfetti();
+        };
+
+        const captionDiv = document.createElement('p');
+captionDiv.innerText = mem.caption;
+captionDiv.style.color = "#fff";
+captionDiv.style.background = "rgba(0,0,0,0.6)";
+captionDiv.style.padding = "8px";
+captionDiv.style.borderRadius = "10px";
+captionDiv.style.marginTop = "5px";
+captionDiv.style.fontSize = "14px";
+captionDiv.style.textAlign = "center";
+
+// captionDiv.style.color = "white";
+// captionDiv.style.fontWeight = "bold";
+
+const wrapper = document.createElement('div');
+wrapper.appendChild(img);
+wrapper.appendChild(captionDiv);
+
+memoryGrid.appendChild(wrapper);
+
+        // memoryGrid.appendChild(img);
+    });
+
+    memoriesSection.scrollIntoView({behavior: "smooth"});
+};
+</script>
+
+
+<script>
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "%";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+}, 800);
+</script>
+
+</body>
+</html>
